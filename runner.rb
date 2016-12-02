@@ -13,5 +13,3 @@ search_boro =  Hotspot.new
 controller = HotspotController.new(search_boro)
 
 controller.run
-
-p
