@@ -8,12 +8,16 @@ class HotspotController
   end
 
   def run
-    HotspotView.show_menu_options
-    input = gets.chomp
-    case input
-      when "1" then get_boro_input
-      when "2" then get_provider_input
-      when "3" then find_free
+    input = ""
+    until input == 'quit'
+      HotspotView.show_menu_options
+      input = gets.chomp
+      case input
+        when "1" then get_boro_input
+        when "2" then get_provider_input
+        when "3" then find_free
+        when "4" then find_by_address
+      end
     end
   end
 
@@ -32,18 +36,26 @@ class HotspotController
   def get_provider_input
     puts "Enter provider:"
     input = gets.chomp
-    input = titlecase(input)
-    providers = @hotspot.search_provider(input)
-    puts providers
-  end
-
-  def titlecase(string)
-    string.split.map {|word| word.capitalize }.join(' ')
+    results = @hotspot.search_provider(titlecase(input))
+    HotspotView.display_results(results)
   end
 
   def find_free
     results = @hotspot.search_free
-    p results
+    HotspotView.display_results(results)
+  end
+
+  def find_by_address
+    puts "Enter address:"
+    address = gets.chomp
+    puts "Enter radius (miles):"
+    radius = gets.chomp.to_f
+    results = @hotspot.search_nearby(address, radius)
+    HotspotView.display_results(results)
+  end
+
+  def titlecase(string)
+    string.split.map {|word| word.capitalize }.join(' ')
   end
 
 end
