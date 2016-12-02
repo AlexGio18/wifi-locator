@@ -7,6 +7,7 @@ module HotspotView
       2. Show all wifi hotspot from a provider
       3. Show all free wifi hotspots
       4. Find wifi hotspots near an address or landmark
+      5. Find free wifi at an address
     TEXT
 
     puts options
